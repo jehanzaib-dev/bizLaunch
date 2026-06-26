@@ -4,7 +4,7 @@ import { executeModelWithFallback } from "../config/gemini.js";
  * Orchestrates the BizLaunch AI Multi-Agent Blueprint Engine
  * POST /api/agile/generate
  */
-export const generateAgilePlan = async (req, res) => {
+export const generateBlueprint = async (req, res) => {
   try {
     const { prompt } = req.body;
 

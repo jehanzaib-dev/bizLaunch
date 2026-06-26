@@ -1,5 +1,5 @@
 import express from "express";
-import { generateAgilePlan } from "../controllers/blueprintController.js";
+import { generateBlueprint } from "../controllers/blueprintController.js";
 
 // Initialize an isolated Express Router instance
 const router = express.Router();
@@ -9,6 +9,6 @@ const router = express.Router();
  * Target: POST /api/agile/generate
  * Description: Receives the feature concept prompt and passes it to the AI swarm controller
  */
-router.route('/generate').post(generateAgilePlan);
+router.route('/generate').post(generateBlueprint);
 
 export default router;

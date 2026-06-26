@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./Workspace.css";
 
-export default function Workspace({ swarmData }) {
+export default function Workspace({ blueprint }) {
   // Manage which business consultant's tab view is currently active
   const [activeTab, setActiveTab] = useState("marketing");
 
   // Destructure our unified payload (mapped seamlessly from the backend)
-  const { productManager: marketingData, technicalLead: operationsData, qaEngineer: financeData } = swarmData;
+  const { productManager: marketingData, technicalLead: operationsData, qaEngineer: financeData } = blueprint;
 
   return (
     <div className="workspaceContainer">

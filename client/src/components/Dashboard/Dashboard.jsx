@@ -1,32 +1,30 @@
 import { useState } from "react";
-import { generateAgilePlanCall } from "../../apiCalls/apiCalls.js";
+import { generateBlueprintCall } from "../../apiCalls/apiCalls.js";
 import "./Dashboard.css";
 
-export default function Dashboard({ setSwarmData, isGenerating, setIsGenerating }) {
+export default function Dashboard({ setBlueprint, isGenerating, setIsGenerating }) {
   const [prompt, setPrompt] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+      setError(null);
+      setIsGenerating(true);
+      setBlueprint(null);
     if (!prompt.trim()) {
-      setError("Please describe your feature requirement or sprint concept.");
+      setError("Please describe your business idea first.");
       return;
     }
 
     try {
-      setError(null);
-      setIsGenerating(true);
-      setSwarmData(null); // Clear previous sprint workspace data during refresh
-
-      // Trigger the backend multi-agent pipeline
-      const data = await generateAgilePlanCall(prompt);
-      setSwarmData(data);
+      const data = await generateBlueprintCall(prompt);
+      setBlueprint(data);
 
     } catch (err) {
       console.error(err);
       setError(
         err.response?.data?.message || 
-        "The AI swarm encountered synchronization latency. Please try again."
+        "Unable to connect to the Server. Please try again."
       );
     } finally {
       setIsGenerating(false);
@@ -38,7 +36,7 @@ export default function Dashboard({ setSwarmData, isGenerating, setIsGenerating 
       <form onSubmit={handleSubmit} className="promptForm">
         <div className="inputGroup">
           <textarea
-            placeholder="Describe your business vision or startup idea (e.g., 'Open a cozy specialty coffee shop with a small book-reading nook in Lahore' or 'Launch a boutique digital marketing agency specializing in local e-commerce growth')..."
+            placeholder="Describe your business vision or startup idea..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             disabled={isGenerating}

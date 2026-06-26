@@ -5,7 +5,7 @@ import "./index.css";
 
 export default function App() {
   // Master state storage holding the combined JSON payload from all 3 AI agents
-  const [swarmData, setSwarmData] = useState(null);
+  const [blueprint, setBlueprint] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
   return (
@@ -23,14 +23,14 @@ export default function App() {
       <main className="appContent">
         {/* Step 1 Input Form: Pass loading states and data setter functions */}
         <Dashboard 
-          setSwarmData={setSwarmData} 
+          setBlueprint={setBlueprint} 
           isGenerating={isGenerating} 
           setIsGenerating={setIsGenerating} 
         />
 
         {/* Step 2 Workspace Panel: Only mounts and shows up once data exists */}
-        {swarmData && (
-          <Workspace swarmData={swarmData} />
+        {blueprint && (
+          <Workspace blueprint={blueprint} />
         )}
       </main>
     </div>
