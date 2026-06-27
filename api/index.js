@@ -23,11 +23,11 @@ app.use(cors({
 // Automatically detects and parses incoming request bodies formatted as JSON strings
 app.use(express.json());
 
-app.use('/api/v1/agile', router);
+app.use('/api/v1/ai', router);
 
 // 3. System Health Check Endpoint
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "healthy", message: "Express Swarm Server running cleanly." });
+  res.status(200).json({ status: "healthy", message: "Express Server running cleanly." });
 });
 
 // 4. Boot Up Server Listener

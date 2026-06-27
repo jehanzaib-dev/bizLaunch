@@ -7,6 +7,6 @@ const API = axios.create({
   },
 });
 export const generateBlueprintCall = async (prompt) => {
-  const response = await API.post("/api/v1/agile/generate", { prompt });
+  const response = await API.post("/api/v1/ai/generate", { prompt });
   return response.data;
 };
