@@ -44,17 +44,13 @@ export default function Dashboard({ setBlueprint, isGenerating, setIsGenerating 
           />
         </div>
 
-        <button 
-  type="submit" 
-  disabled={isGenerating} 
-  className={`submitBtn ${isGenerating ? "processing" : ""}`}
->
-  {isGenerating ? (
-    <div className="loaderWrapper">
-      <span className="syncSpinner"></span>
-      <span>Generating Business Blueprint...</span>
-    </div>
-  ) : (
+        <button type="submit" disabled={isGenerating} className={`submitBtn ${isGenerating ? "processing" : ""}`}>
+          {isGenerating ? (
+            <div className="loaderWrapper">
+            <span className="syncSpinner"></span>
+            <span>Generating Business Blueprint...</span>
+            </div>
+        ) : (
     "Generate Startup Blueprint"
   )}
 </button>
