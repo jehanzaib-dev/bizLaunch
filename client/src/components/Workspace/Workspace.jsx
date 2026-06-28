@@ -2,137 +2,595 @@ import { useState } from "react";
 import "./Workspace.css";
 
 export default function Workspace({ blueprint }) {
-  // Manage which business consultant's tab view is currently active
   const [activeTab, setActiveTab] = useState("marketing");
 
-  // Destructure our unified payload (mapped seamlessly from the backend)
-  const { productManager: marketingData, technicalLead: operationsData, qaEngineer: financeData } = blueprint;
+  const {
+    marketing,
+    operations,
+    finance,
+    strategy,
+  } = blueprint;
 
   return (
     <div className="workspaceContainer">
-      {/* Tab Navigation Controls */}
+
+      {/* =========================
+          TAB NAVIGATION
+      ========================== */}
+
       <div className="tabBar">
+
         <button
+          className={`tabBtn ${
+            activeTab === "marketing" ? "active" : ""
+          }`}
           onClick={() => setActiveTab("marketing")}
-          className={`tabBtn ${activeTab === "marketing" ? "active" : ""}`}
         >
-          📢 Marketing & Branding
+          📢 Marketing
         </button>
+
         <button
+          className={`tabBtn ${
+            activeTab === "operations" ? "active" : ""
+          }`}
           onClick={() => setActiveTab("operations")}
-          className={`tabBtn ${activeTab === "operations" ? "active" : ""}`}
         >
-          ⚙️ Operations & Logistics
+          ⚙️ Operations
         </button>
+
         <button
+          className={`tabBtn ${
+            activeTab === "finance" ? "active" : ""
+          }`}
           onClick={() => setActiveTab("finance")}
-          className={`tabBtn ${activeTab === "finance" ? "active" : ""}`}
         >
-          💰 Financial Strategy
+          💰 Finance
         </button>
+
+        <button
+          className={`tabBtn ${
+            activeTab === "strategy" ? "active" : ""
+          }`}
+          onClick={() => setActiveTab("strategy")}
+        >
+          🚀 Strategy
+        </button>
+
       </div>
 
-      {/* Tab Content Display Panels */}
       <div className="tabContent">
-        
-        {/* VIEW 1: MARKETING & BRANDING */}
+
+        {/* =====================================================
+            MARKETING TAB
+        ===================================================== */}
+
         {activeTab === "marketing" && (
+
           <div className="agentView animateFade">
+
+            {/* BUSINESS SUMMARY */}
+
             <section className="workspaceSection">
-              <h4>Market & Brand Strategy</h4>
-              <div className="storiesGrid">
-                {marketingData?.userStories?.map((item) => (
-                  <div key={item.id} className="storyCard">
-                    <span className="cardBadge">
-                      {item.story.startsWith("Target Audience:") ? "Target Market" : "Brand Identity"}
+
+              <h4>Business Summary</h4>
+
+              <div className="summaryCard">
+                <p>{marketing?.businessSummary}</p>
+              </div>
+
+            </section>
+
+            {/* TARGET AUDIENCE */}
+
+            <section className="workspaceSection">
+
+              <h4>Target Audience</h4>
+
+              <div className="cardGrid">
+
+                {marketing?.targetAudience?.map((item, index) => (
+
+                  <div
+                    key={index}
+                    className="infoCard"
+                  >
+                    <span className="cardNumber">
+                      {index + 1}
                     </span>
-                    <p>{item.story}</p>
+
+                    <p>{item}</p>
+
                   </div>
+
                 ))}
+
               </div>
+
             </section>
+
+            {/* BRAND IDEAS */}
 
             <section className="workspaceSection">
-              <h4>Launch Strategy Milestones</h4>
-              <ul className="criteriaList">
-                {marketingData?.acceptanceCriteria?.map((criterion, idx) => (
-                  <li key={idx}>🔹 {criterion}</li>
+
+              <h4>Brand Ideas</h4>
+
+              <div className="brandGrid">
+
+                {marketing?.brandIdeas?.map((brand, index) => (
+
+                  <div
+                    key={index}
+                    className="brandCard"
+                  >
+
+                    <h5>{brand.name}</h5>
+
+                    <p>{brand.tagline}</p>
+
+                  </div>
+
                 ))}
-              </ul>
+
+              </div>
+
             </section>
+
+            {/* MARKETING STRATEGY */}
+
+            <section className="workspaceSection">
+
+              <h4>Marketing Strategy</h4>
+
+              <div className="timeline">
+
+                {marketing?.marketingStrategy?.map((step, index) => (
+
+                  <div
+                    key={index}
+                    className="timelineItem"
+                  >
+
+                    <div className="timelineBadge">
+                      {index + 1}
+                    </div>
+
+                    <div className="timelineContent">
+                      {step}
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </section>
+
           </div>
+
         )}
 
-        {/* VIEW 2: OPERATIONS & LOGISTICS */}
+        {/* =====================================================
+            OPERATIONS TAB
+        ===================================================== */}
+
         {activeTab === "operations" && (
+
           <div className="agentView animateFade">
-            <section className="workspaceSection">
-              <h4>Infrastructure & Operational Assets</h4>
-              <div className="schemaBox">
-                <pre>{operationsData?.databaseSchema}</pre>
-              </div>
-            </section>
+
+            {/* BUSINESS SETUP */}
 
             <section className="workspaceSection">
-              <h4>Phased Operational Roadmap</h4>
-              <div className="endpointTableWrapper">
-                <table className="endpointTable">
-                  <thead>
-                    <tr>
-                      <th>Phase</th>
-                      <th>Operational Pillar</th>
-                      <th>Execution Requirements</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {operationsData?.apiEndpoints?.map((phase, idx) => (
-                      <tr key={idx}>
-                        <td>
-                          <span className={`methodBadge ${phase.method.replace(/\s+/g, '').toUpperCase()}`}>
-                            {phase.method}
-                          </span>
-                        </td>
-                        <td className="codeText">{phase.path}</td>
-                        <td>{phase.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </div>
-        )}
 
-        {/* VIEW 3: FINANCIAL STRATEGY */}
-        {activeTab === "finance" && (
-          <div className="agentView animateFade">
-            <section className="workspaceSection">
-              <h4>Financial Feasibility Checklists</h4>
-              <ul className="qaList">
-                {financeData?.manualTests?.map((checkpoint, idx) => (
-                  <li key={idx}>
-                    <input type="checkbox" id={`finance-${idx}`} className="qaCheck" />
-                    <label htmlFor={`finance-${idx}`}>{checkpoint}</label>
-                  </li>
-                ))}
-              </ul>
-            </section>
+              <h4>Business Setup</h4>
 
-            <section className="workspaceSection">
-              <h4>Risk Mitigation & Blindspots</h4>
-              <div className="edgeCaseGrid">
-                {financeData?.edgeCases?.map((blindspot, idx) => (
-                  <div key={idx} className="edgeCard">
-                    <span className="edgeIcon">🔍</span>
-                    <p>{blindspot}</p>
+              <div className="cardGrid">
+
+                {operations?.businessSetup?.map((item, index) => (
+
+                  <div
+                    key={index}
+                    className="infoCard"
+                  >
+
+                    <span className="cardNumber">
+                      {index + 1}
+                    </span>
+
+                    <p>{item}</p>
+
                   </div>
+
                 ))}
+
               </div>
+
             </section>
+
+            {/* REQUIRED RESOURCES */}
+
+            <section className="workspaceSection">
+
+              <h4>Required Resources</h4>
+
+              <div className="cardGrid">
+
+                {operations?.requiredResources?.map((item, index) => (
+
+                  <div
+                    key={index}
+                    className="infoCard"
+                  >
+
+                    <span className="cardNumber">
+                      {index + 1}
+                    </span>
+
+                    <p>{item}</p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </section>
+
+            {/* LAUNCH CHECKLIST */}
+
+            <section className="workspaceSection">
+
+              <h4>Launch Checklist</h4>
+
+              <div className="checklist">
+
+                {operations?.launchChecklist?.map((step, index) => (
+
+                  <div
+                    key={index}
+                    className="checkItem"
+                  >
+
+                    <div className="checkCircle">
+                      ✓
+                    </div>
+
+                    <span>{step}</span>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </section>
+
+            {/* POSSIBLE CHALLENGES */}
+
+            <section className="workspaceSection">
+
+              <h4>Possible Challenges</h4>
+
+              <div className="warningGrid">
+
+                {operations?.possibleChallenges?.map((challenge, index) => (
+
+                  <div
+                    key={index}
+                    className="warningCard"
+                  >
+
+                    <span>⚠️</span>
+
+                    <p>{challenge}</p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </section>
+
           </div>
+
         )}
+                {/* =====================================================
+            FINANCE TAB
+        ===================================================== */}
+
+{activeTab === "finance" && (
+
+<div className="agentView animateFade">
+
+  {/* STARTUP BUDGET */}
+
+  <section className="workspaceSection">
+
+  <h4>Estimated Startup Budget</h4>
+
+  <div className="cardGrid">
+
+    {finance?.startupBudget?.map((item, index) => (
+
+      <div
+        key={index}
+        className="infoCard"
+      >
+
+        <span className="cardNumber">
+          💵
+        </span>
+
+        <h5>{item.category}</h5>
+
+        <h3>{item.estimatedCost}</h3>
+
+        <p>{item.description}</p>
 
       </div>
+
+    ))}
+
+  </div>
+
+</section>
+
+  {/* REVENUE STREAMS */}
+
+  <section className="workspaceSection">
+
+    <h4>Revenue Streams</h4>
+
+    <div className="cardGrid">
+
+      {finance?.revenueStreams?.map((item, index) => (
+
+        <div
+          key={index}
+          className="infoCard"
+        >
+
+          <span className="cardNumber">
+            💰
+          </span>
+
+          <p>{item}</p>
+
+        </div>
+
+      ))}
+
     </div>
-  );
+
+  </section>
+
+  {/* PRICING */}
+
+  <section className="workspaceSection">
+
+    <h4>Pricing Suggestions</h4>
+
+    <div className="timeline">
+
+      {finance?.pricingSuggestions?.map((item, index) => (
+
+        <div
+          key={index}
+          className="timelineItem"
+        >
+
+          <div className="timelineBadge">
+
+            {index + 1}
+
+          </div>
+
+          <div className="timelineContent">
+
+            {item}
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+  {/* GROWTH */}
+
+  <section className="workspaceSection">
+
+    <h4>Growth Opportunities</h4>
+
+    <div className="cardGrid">
+
+      {finance?.growthOpportunities?.map((item, index) => (
+
+        <div
+          key={index}
+          className="infoCard"
+        >
+
+          <span className="cardNumber">
+
+            📈
+
+          </span>
+
+          <p>{item}</p>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+  {/* FINANCIAL TIPS */}
+
+  <section className="workspaceSection">
+
+    <h4>Financial Tips</h4>
+
+    <div className="tipGrid">
+    {finance?.financialTips?.map((tip, index) => (
+
+<div
+  key={index}
+  className="infoCard"
+>
+
+  <span className="cardNumber">
+    💵
+  </span>
+
+  <p>{tip}</p>
+
+</div>
+
+))}
+      
+
+    </div>
+
+  </section>
+
+</div>
+
+)}
+
+{/* =====================================================
+  STRATEGY TAB
+===================================================== */}
+
+{activeTab === "strategy" && (
+
+<div className="agentView animateFade">
+
+  {/* BUSINESS MODEL */}
+
+  <section className="workspaceSection">
+
+    <h4>Business Model</h4>
+
+    <div className="summaryCard">
+
+      <p>{strategy?.businessModel}</p>
+
+    </div>
+
+  </section>
+
+  {/* COMPETITIVE ADVANTAGES */}
+
+  <section className="workspaceSection">
+
+    <h4>Competitive Advantages</h4>
+
+    <div className="cardGrid">
+
+      {strategy?.competitiveAdvantages?.map((item, index) => (
+
+        <div
+          key={index}
+          className="infoCard"
+        >
+
+          <span className="cardNumber">
+
+            ⭐
+
+          </span>
+
+          <p>{item}</p>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+  {/* RISKS */}
+
+  <section className="workspaceSection">
+
+    <h4>Business Risks</h4>
+
+    <div className="warningGrid">
+
+      {strategy?.risks?.map((risk, index) => (
+
+        <div
+          key={index}
+          className="warningCard"
+        >
+
+          <span>
+
+            🚨
+
+          </span>
+
+          <p>{risk}</p>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+  {/* NEXT 90 DAYS */}
+
+  <section className="workspaceSection">
+
+    <h4>90-Day Action Plan</h4>
+
+    <div className="timeline">
+
+      {strategy?.next90DaysPlan?.map((step, index) => (
+
+        <div
+          key={index}
+          className="timelineItem"
+        >
+
+          <div className="timelineBadge">
+
+            {index + 1}
+
+          </div>
+
+          <div className="timelineContent">
+
+            {step}
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </section>
+
+</div>
+
+)}
+
+</div>
+
+</div>
+
+);
+
 }

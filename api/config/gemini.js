@@ -22,7 +22,7 @@ export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
  */
 export const executeModelWithFallback = async (systemInstruction, userPrompt) => {
   // A modern, official SDK-supported array targeting stable generation models
-  const modelsToTry = ["gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash-exp"];
+  const modelsToTry = ["gemini-3.1-flash-lite","gemini-2.5-flash-lite", "gemini-2.5-flash"];
   
   let lastError = null;
 
