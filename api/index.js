@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 // 1. Enable Cross-Origin Resource Sharing (CORS) 
 // This allows your React app running on localhost:5173 to safely communicate with this Express server
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", process.env.CLIENT_URL],
   methods: ["GET", "POST"],
   credentials: true
 }));
