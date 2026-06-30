@@ -1,6 +1,6 @@
-import { generateBusinessBlueprint } from "../services/blueprintService.js";
+import { generateBlueprint } from "../services/generateBlueprint.js";
 
-export const generateBlueprint = async (req, res) => {
+export const BlueprintController = async (req, res) => {
   try {
     const { prompt } = req.body;
 
@@ -15,7 +15,7 @@ export const generateBlueprint = async (req, res) => {
     console.log(`[BizLaunch] Generating blueprint for: "${prompt}"`);
 
     // Generate complete business blueprint
-    const blueprint = await generateBusinessBlueprint(prompt);
+    const blueprint = await generateBlueprint(prompt);
 
     return res.status(200).json({
       success: true,

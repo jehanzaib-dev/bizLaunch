@@ -13,7 +13,7 @@ if (!process.env.GEMINI_API_KEY) {
 // 1. Initialize a singular, globally accessible official Google GenAI instance
 export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-export const executeModelWithFallback = async (systemInstruction, userPrompt) => {
+export const callAIModels = async (systemInstruction, userPrompt) => {
   // A modern, official SDK-supported array targeting stable generation models
   const modelsToTry = ["gemini-3.1-flash-lite","gemini-2.5-flash-lite", "gemini-2.5-flash"];
   

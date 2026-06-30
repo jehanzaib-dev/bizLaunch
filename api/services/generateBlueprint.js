@@ -1,11 +1,11 @@
-import { executeModelWithFallback } from "../config/gemini.js";
+import { callAIModels } from "../config/callAIModels.js";
 
 import marketingPrompt from "./prompts/marketingPrompt.js";
 import operationsPrompt from "./prompts/operationsPrompt.js";
 import financePrompt from "./prompts/financePrompt.js";
 import strategyPrompt from "./prompts/strategyPrompt.js";
 
-export const generateBusinessBlueprint = async (prompt) => {
+export const generateBlueprint = async (prompt) => {
 
   console.log("[Blueprint Service] Launching AI business consultants...");
 
@@ -17,13 +17,13 @@ export const generateBusinessBlueprint = async (prompt) => {
     strategy
   ] = await Promise.all([
 
-    executeModelWithFallback(marketingPrompt, prompt),
+    callAIModels(marketingPrompt, prompt),
 
-    executeModelWithFallback(operationsPrompt, prompt),
+    callAIModels(operationsPrompt, prompt),
 
-    executeModelWithFallback(financePrompt, prompt),
+    callAIModels(financePrompt, prompt),
 
-    executeModelWithFallback(strategyPrompt, prompt)
+    callAIModels(strategyPrompt, prompt)
 
   ]);
 
