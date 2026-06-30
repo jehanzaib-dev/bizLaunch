@@ -17,7 +17,7 @@ export const callAIModels = async (systemInstruction, userPrompt) => {
   // A modern, official SDK-supported array targeting stable generation models
   const modelsToTry = ["gemini-3.1-flash-lite","gemini-2.5-flash-lite", "gemini-2.5-flash"];
   
-  let lastError = null;
+  let currentError = null;
 
   for (let i = 0; i < modelsToTry.length; i++) {
     const currentModel = modelsToTry[i];
@@ -43,7 +43,7 @@ export const callAIModels = async (systemInstruction, userPrompt) => {
 
     } catch (error) {
       console.warn(`[Swarm Warning] Generation failed for model ${currentModel}: ${error.message}`);
-      lastError = error;
+      currentError = error;
 
       // If we encounter a rate limit (429) or server issue (503), pause briefly before trying backup models
       if (i < modelsToTry.length - 1) {
@@ -55,5 +55,5 @@ export const callAIModels = async (systemInstruction, userPrompt) => {
   }
 
   // If every model in our fallback tier structural array breaks down, fail the request transparently
-  throw new Error(`All available swarm models exhausted. Primary failure reason: ${lastError.message}`);
+  throw new Error(`All available swarm models exhausted. Primary failure reason: ${currentError.message}`);
 };
